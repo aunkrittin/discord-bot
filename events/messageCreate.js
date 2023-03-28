@@ -43,16 +43,14 @@ module.exports = async (client, message) => {
         });
     }
 
-    await message
-      .reply({
-        content: `Loading your ${res.playlist ? "playlist" : "track"}... 🎧`,
-      })
-      .then((msg) => {
-        setTimeout(() => {
-          msg.delete();
-          message.delete();
-        }, 3000);
-      });
+    // await message
+    //   .reply({
+    //     content: `Loading your ${res.playlist ? "playlist" : "track"}... 🎧`,
+    //   })
+
+    setTimeout(() => {
+      message.delete();
+    }, 3000);
 
     res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
 

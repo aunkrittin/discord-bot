@@ -14,10 +14,32 @@ player.on("connectionError", (queue, error) => {
 });
 
 player.on("trackStart", async (queue, track) => {
+  const channel = await client.channels.fetch("1090136184837128202");
+  const message = await channel.messages.fetch("1090179733792235570");
+  const messageId = "1090179733792235570";
+
+  const songs = queue.tracks.length;
+  const nextSongs =
+    songs > 5
+      ? `And **${songs - 5}** other song(s)...`
+      : `In the playlist **${songs}** song(s)...`;
+
+  const tracks = queue.tracks.map(
+    (track, i) =>
+      `**${i + 1}** - ${track.title} | ${track.author} (requested by : ${
+        track.requestedBy.username
+      })`
+  );
+
   if (!client.config.opt.loopMessage && queue.repeatMode !== 0) return;
 
   const embed = new EmbedBuilder()
-    .setTitle(track.title)
+    .setTitle("icutmyhair#2000 ❤️")
+    .setDescription(
+      `Current ${queue.current.title}\n\n${tracks
+        .slice(0, 5)
+        .join("\n")}\n\n${nextSongs}`
+    )
     .setFields([
       { name: "Author", value: track.author, inline: true },
       { name: "Duration", value: track.duration, inline: true },
@@ -25,6 +47,7 @@ player.on("trackStart", async (queue, track) => {
     .setImage(track.thumbnail)
     .setURL(track.url)
     .setColor("#13f857")
+    .setTimestamp()
     .setFooter({
       text: `Requested by ${track.requestedBy.username}`,
     });
@@ -88,10 +111,7 @@ player.on("trackStart", async (queue, track) => {
     volumeup
   );
 
-  const channel = await client.channels.fetch("1090136184837128202");
-  const message = await channel.messages.fetch("1090179733792235570");
-  const messageId = "1090179733792235570";
-  // console.log(message.id, messageId);
+  console.log(message.id, messageId);
   if (messageId === message.id) {
     console.log("exist message");
     message.edit({ embeds: [embed], components: [row1, row2] });
@@ -100,12 +120,55 @@ player.on("trackStart", async (queue, track) => {
   }
 });
 
-player.on("trackAdd", (queue, track) => {
+player.on("trackAdd", async (queue, track) => {
   queue.metadata
     .send(`Track ${track.title} added in the queue ✅`)
     .then((msg) => {
       setTimeout(() => msg.delete(), 3000);
     });
+
+  const channel = await client.channels.fetch("1090136184837128202");
+  const message = await channel.messages.fetch("1090179733792235570");
+  const messageId = "1090179733792235570";
+
+  const songs = queue.tracks.length;
+  const nextSongs =
+    songs > 5
+      ? `And **${songs - 5}** other song(s)...`
+      : `In the playlist **${songs}** song(s)...`;
+
+  const tracks = queue.tracks.map(
+    (track, i) =>
+      `**${i + 1}** - ${track.title} | ${track.author} (requested by : ${
+        track.requestedBy.username
+      })`
+  );
+
+  // const embed = new EmbedBuilder()
+  //   .setTitle("icutmyhair#2000 ❤️")
+  //   .setDescription(
+  //     `Current ${queue.current.title}\n\n${tracks
+  //       .slice(0, 5)
+  //       .join("\n")}\n\n${nextSongs}`
+  //   )
+  //   .setFields([
+  //     { name: "Author", value: track.author, inline: true },
+  //     { name: "Duration", value: track.duration, inline: true },
+  //   ])
+  //   .setImage(track.thumbnail)
+  //   .setURL(track.url)
+  //   .setColor("#13f857")
+  //   .setTimestamp()
+  //   .setFooter({
+  //     text: `Requested by ${track.requestedBy.username}`,
+  //   });
+
+  // if (messageId === message.id) {
+  //   console.log("exist message");
+  //   message.edit({ embeds: [embed] });
+  // } else {
+  //   console.log("not exist message");
+  // }
 });
 
 player.on("botDisconnect", async (queue, track) => {
