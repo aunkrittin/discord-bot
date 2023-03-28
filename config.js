@@ -3,7 +3,7 @@ module.exports = {
     token:
       "MTA4OTcyNDQ0NzYxMjc0Mzc5MA.GddppK.m_hIPusd9zxE0nCZzqp7uEXEcR9aot_oKOfZgE",
     playing: "icutmyhair ❤️",
-    global: false,
+    global: true,
     guild: "698559672864604230",
   },
 
