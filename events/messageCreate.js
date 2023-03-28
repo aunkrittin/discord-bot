@@ -3,7 +3,7 @@ const { ApplicationCommandOptionType } = require("discord.js");
 const { CommandInteraction } = require("discord.js");
 
 module.exports = async (client, message) => {
-  if (message.author.bot || message.channel.name !== "music-commands") 
+  if (message.author.bot || message.channel.name !== "music-commands") return;
     const song = message.content;
     const res = await player.search(song, {
       requestedBy: message.member,
