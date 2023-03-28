@@ -1,7 +1,7 @@
 module.exports = {
   app: {
     token:
-      "MTA4OTcyNDQ0NzYxMjc0Mzc5MA.GddppK.m_hIPusd9zxE0nCZzqp7uEXEcR9aot_oKOfZgE",
+      "MTA4OTcyNDQ0NzYxMjc0Mzc5MA.GnPmKN.jqv_dTIx0L2nWuy1Jy8SpGYZCCqMFhWvxBnqHo",
     playing: "icutmyhair ❤️",
     global: true,
     guild: "698559672864604230",

@@ -4,42 +4,42 @@ const {
   ButtonBuilder,
   EmbedBuilder,
 } = require("discord.js");
+const fs = require("fs");
 
 player.on("error", (queue, error) => {
   console.log(`Error emitted from the queue ${error.message}`);
+  const errorMessage = `Error emitted from the queue ${error.message}\n`;
+  fs.appendFile("error.log", errorMessage, (err) => {
+    if (err) throw err;
+    console.log("Error logged to file");
+  });
 });
 
 player.on("connectionError", (queue, error) => {
   console.log(`Error emitted from the connection ${error.message}`);
 });
 
+player.on("stopped", (queue, track, payload) => {
+  console.log(`do stopped event`);
+});
+
 player.on("trackStart", async (queue, track) => {
+  console.log(`do trackStart event`);
   const channel = await client.channels.fetch("1090136184837128202");
   const message = await channel.messages.fetch("1090179733792235570");
-  const messageId = "1090179733792235570";
-
+  // const messageId = "1090179733792235570";
   const songs = queue.tracks.length;
   const nextSongs =
     songs > 5
       ? `And **${songs - 5}** other song(s)...`
       : `In the playlist **${songs}** song(s)...`;
 
-  const tracks = queue.tracks.map(
-    (track, i) =>
-      `**${i + 1}** - ${track.title} | ${track.author} (requested by : ${
-        track.requestedBy.username
-      })`
-  );
-
   if (!client.config.opt.loopMessage && queue.repeatMode !== 0) return;
 
+  // console.log(message.embeds[0]);
   const embed = new EmbedBuilder()
     .setTitle("icutmyhair#2000 ❤️")
-    .setDescription(
-      `Current ${queue.current.title}\n\n${tracks
-        .slice(0, 5)
-        .join("\n")}\n\n${nextSongs}`
-    )
+    .setDescription(nextSongs)
     .setFields([
       { name: "Author", value: track.author, inline: true },
       { name: "Duration", value: track.duration, inline: true },
@@ -111,13 +111,7 @@ player.on("trackStart", async (queue, track) => {
     volumeup
   );
 
-  console.log(message.id, messageId);
-  if (messageId === message.id) {
-    console.log("exist message");
-    message.edit({ embeds: [embed], components: [row1, row2] });
-  } else {
-    console.log("not exist message");
-  }
+  message.edit({ embeds: [embed], components: [row1, row2] });
 });
 
 player.on("trackAdd", async (queue, track) => {

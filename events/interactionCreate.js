@@ -2,7 +2,6 @@ const { EmbedBuilder, InteractionType } = require("discord.js");
 
 module.exports = (client, inter) => {
   if (inter.type === InteractionType.ApplicationCommand) {
-    const DJ = client.config.opt.DJ;
     const command = client.commands.get(inter.commandName);
 
     if (!command)
@@ -27,23 +26,6 @@ module.exports = (client, inter) => {
             .setColor("#ff0000")
             .setDescription(
               `❌ | You need do not have the proper permissions to exacute this command`
-            ),
-        ],
-        ephemeral: true,
-      });
-    if (
-      DJ.enabled &&
-      DJ.commands.includes(command) &&
-      !inter.member._roles.includes(
-        inter.guild.roles.cache.find((x) => x.name === DJ.roleName).id
-      )
-    )
-      return inter.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setColor("#ff0000")
-            .setDescription(
-              `❌ | This command is reserved For members with \`${DJ.roleName}\` `
             ),
         ],
         ephemeral: true,
