@@ -48,11 +48,6 @@ player.events.on("playerStart", async (queue, track) => {
     .setCustomId(JSON.stringify({ ffb: "resume&pause" }))
     .setStyle("Danger");
 
-  const save = new ButtonBuilder()
-    .setLabel("Save")
-    .setCustomId(JSON.stringify({ ffb: "savetrack" }))
-    .setStyle("Success");
-
   const volumeup = new ButtonBuilder()
     .setLabel("Volume up")
     .setCustomId(JSON.stringify({ ffb: "volumeup" }))
@@ -84,12 +79,7 @@ player.events.on("playerStart", async (queue, track) => {
     np,
     skip
   );
-  const row2 = new ActionRowBuilder().addComponents(
-    volumedown,
-    loop,
-    save,
-    volumeup
-  );
+  const row2 = new ActionRowBuilder().addComponents(volumedown, loop, volumeup);
 
   message.edit({ embeds: [embed], components: [row1, row2] });
   // queue.metadata.channel.send({ embeds: [embed], components: [row1, row2] });
