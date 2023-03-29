@@ -13,7 +13,6 @@ module.exports = {
     leaveOnEmpty: true,
     leaveOnEmptyCooldown: 300000,
     selfDeaf: true,
-    autoSelfDeaf: true,
     loopMessage: false,
     spotifyBridge: true,
     volume: 75,

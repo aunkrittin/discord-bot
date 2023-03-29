@@ -27,6 +27,10 @@ module.exports = async (client, message) => {
     },
     volume: client.config.opt.volume,
     leaveOnEnd: client.config.opt.leaveOnEnd,
+    leaveOnEndCooldown: client.config.opt.leaveOnEndCooldown,
+    leaveOnEmpty: client.config.opt.leaveOnEmpty,
+    leaveOnEmptyCooldown: client.config.opt.leaveOnEmptyCooldown,
+    selfDeaf: client.config.opt.selfDeaf,
   });
 
   try {
