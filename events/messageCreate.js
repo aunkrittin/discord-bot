@@ -50,9 +50,9 @@ module.exports = async (client, message) => {
   //   content: `Loading your ${res.playlist ? "playlist" : "track"}... 🎧`,
   // });
 
-  setTimeout(() => {
-    message.delete();
-  }, 3000);
+  // setTimeout(() => {
+  //   message.delete();
+  // }, 3000);
 
   if (res.playlist) {
     queue.addTrack(res.tracks);
