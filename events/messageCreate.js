@@ -25,12 +25,12 @@ module.exports = async (client, message) => {
       client: message.guild.members.me,
       requestedBy: message.user,
     },
-    volume: client.config.opt.volume,
-    leaveOnEnd: client.config.opt.leaveOnEnd,
-    leaveOnEndCooldown: client.config.opt.leaveOnEndCooldown,
-    leaveOnStop: client.config.opt.leaveOnStop,
-    leaveOnStopCooldown: client.config.opt.leaveOnStopCooldown,
-    selfDeaf: client.config.opt.selfDeaf,
+    volume: client.config.parsed?.VOLUME,
+    leaveOnEnd: client.config.parsed?.LEAVE_ON_END,
+    leaveOnEndCooldown: client.config.parsed?.LEAVE_ON_END_COOLDOWN,
+    leaveOnStop: client.config.parsed?.LEAVE_ON_STOP,
+    leaveOnStopCooldown: client.config.parsed?.LEAVE_ON_END_COOLDOWN,
+    selfDeaf: client.config.parsed?.SELF_DEAF,
   });
 
   try {
