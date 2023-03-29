@@ -35,7 +35,7 @@ module.exports = async (client, message) => {
   try {
     if (!queue.connection) await queue.connect(message.member.voice.channel);
   } catch {
-    await player.deleteQueue(message.guildId);
+    // await player.deleteQueue(message.guildId);
     return message
       .reply({
         content: `I can't join the voice channel ${message.member}... try again ? ❌`,
