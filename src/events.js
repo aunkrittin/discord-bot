@@ -1,5 +1,4 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require("discord.js");
-const fs = require("fs");
 
 player.events.on("error", (queue, error) => {
   console.log(`Error emitted from the queue ${error.message}`);
@@ -38,11 +37,6 @@ player.events.on("playerStart", async (queue, track) => {
     .setFooter({
       text: `Requested by ${track.requestedBy.username}`,
     });
-
-  const back = new ButtonBuilder()
-    .setLabel("Back")
-    .setCustomId(JSON.stringify({ ffb: "back" }))
-    .setStyle("Primary");
 
   const skip = new ButtonBuilder()
     .setLabel("Skip")
@@ -85,7 +79,6 @@ player.events.on("playerStart", async (queue, track) => {
     .setStyle("Secondary");
 
   const row1 = new ActionRowBuilder().addComponents(
-    back,
     queuebutton,
     resumepause,
     np,
@@ -184,6 +177,11 @@ player.events.on("emptyQueue", (queue) => {
     .then((msg) => {
       setTimeout(() => msg.delete(), 3000);
     });
+});
+
+player.events.on("playerSkip", (queue, track) => {
+  // Emitted when the audio player fails to load the stream for a song
+  queue.metadata.channel.send(`Skipping **${track.title}** due to an issue!`);
 });
 
 player.events.on("audioTracksAdd", (queue, tracks) => {
