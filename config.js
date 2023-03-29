@@ -9,6 +9,11 @@ module.exports = {
   opt: {
     maxVol: 100,
     leaveOnEnd: true,
+    leaveOnEndCooldown: 300000,
+    leaveOnEmpty: true,
+    leaveOnEmptyCooldown: 300000,
+    selfDeaf: true,
+    autoSelfDeaf: true,
     loopMessage: false,
     spotifyBridge: true,
     volume: 75,

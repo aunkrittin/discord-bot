@@ -160,14 +160,14 @@ player.events.on("emptyChannel", (queue) => {
     });
 });
 
-// player.events.on("emptyQueue", (queue) => {
-//   console.log("emptyQueue");
-//   queue.metadata.channel
-//     .send("I finished reading the whole queue ✅")
-//     .then((msg) => {
-//       setTimeout(() => msg.delete(), 3000);
-//     });
-// });
+player.events.on("emptyQueue", (queue) => {
+  console.log("emptyQueue");
+  queue.metadata.channel
+    .send("I finished reading the whole queue ✅")
+    .then((msg) => {
+      setTimeout(() => msg.delete(), 3000);
+    });
+});
 
 player.events.on("playerSkip", (queue, track) => {
   // Emitted when the audio player fails to load the stream for a song
