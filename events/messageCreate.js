@@ -3,9 +3,10 @@ const { QueryType } = require("discord-player");
 module.exports = async (client, message) => {
   if (message.author.bot || message.channel.name !== "music-commands") return;
   const song = message.content;
+
   const res = await player.search(song, {
     requestedBy: message.member,
-    searchEngine: QueryType.AUTO,
+    searchEngine: QueryType.YOUTUBE,
   });
 
   if (!res || !res.tracks.length)
@@ -18,11 +19,17 @@ module.exports = async (client, message) => {
         setTimeout(() => msg.delete(), 3000);
       });
 
-  const queue = await player.createQueue(message.guild, {
-    metadata: message.channel,
-    spotifyBridge: true,
-    initialVolume: 75,
-    leaveOnEnd: true,
+  const queue = await player.nodes.create(message.guild, {
+    metadata: {
+      channel: message.channel,
+      client: message.guild.members.me,
+      requestedBy: message.user,
+    },
+    // spotifyBridge: client.config.opt.spotifyBridge,
+    volume: client.config.opt.volume,
+    leaveOnEnd: client.config.opt.leaveOnEnd,
+    leaveOnStop: true,
+    leaveOnEmpty: true,
   });
 
   try {
@@ -39,16 +46,19 @@ module.exports = async (client, message) => {
       });
   }
 
-  // await message
-  //   .reply({
-  //     content: `Loading your ${res.playlist ? "playlist" : "track"}... 🎧`,
-  //   })
+  // await message.reply({
+  //   content: `Loading your ${res.playlist ? "playlist" : "track"}... 🎧`,
+  // });
 
   setTimeout(() => {
     message.delete();
   }, 3000);
 
-  res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
+  if (res.playlist) {
+    queue.addTrack(res.tracks);
+  } else {
+    queue.addTrack(res.tracks[0]);
+  }
 
-  if (!queue.playing) await queue.play();
+  if (!queue.node.isPlaying()) await queue.node.play();
 };

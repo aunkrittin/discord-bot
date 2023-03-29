@@ -1,12 +1,15 @@
 const { EmbedBuilder } = require("discord.js");
 module.exports = async ({ client, inter, queue }) => {
-  if (!queue || !queue.playing)
+  if (!queue || !queue.node.isPlaying())
     return inter.reply({
       content: `No music currently playing... try again ? ❌`,
       ephemeral: true,
     });
 
-  if (!queue.tracks[0])
+  // console.log(queue.tracks.size);
+  // console.log(queue.tracks.data[0]);
+
+  if (!queue.tracks.data[0])
     return inter.reply({
       content: `No music in the queue after the current one ${inter.member}... try again ? ❌`,
       ephemeral: true,
@@ -14,7 +17,7 @@ module.exports = async ({ client, inter, queue }) => {
 
   const methods = ["", "🔁", "🔂"];
 
-  const songs = queue.tracks.length;
+  const songs = queue.tracks.size;
 
   const nextSongs =
     songs > 5
@@ -36,7 +39,7 @@ module.exports = async ({ client, inter, queue }) => {
       iconURL: client.user.displayAvatarURL({ size: 1024, dynamic: true }),
     })
     .setDescription(
-      `Current ${queue.current.title}\n\n${tracks
+      `Current ${queue.currentTrack.title}\n\n${tracks
         .slice(0, 5)
         .join("\n")}\n\n${nextSongs}`
     )

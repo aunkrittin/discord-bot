@@ -12,27 +12,27 @@ module.exports = async ({ inter, queue }) => {
       embeds: [
         new EmbedBuilder()
           .setColor("Red")
-          .setTitle(`:arrow_forward: ${queue.current.title}`)
-          .setURL(queue.current.url)
+          .setTitle(`:arrow_forward: ${queue.currentTrack.title}`)
+          .setURL(queue.currentTrack.url)
           .addFields(
             {
               name: ":hourglass: Duration:",
-              value: `\`${queue.current.duration}\``,
+              value: `\`${queue.currentTrack.duration}\``,
               inline: true,
             },
             {
               name: "Song by:",
-              value: `\`${queue.current.author}\``,
+              value: `\`${queue.currentTrack.author}\``,
               inline: true,
             },
             {
               name: "Views :eyes:",
-              value: `\`${Number(queue.current.views).toLocaleString()}\``,
+              value: `\`${Number(queue.currentTrack.views).toLocaleString()}\``,
               inline: true,
             },
-            { name: "Song URL:", value: `\`${queue.current.url}\`` }
+            { name: "Song URL:", value: `\`${queue.currentTrack.url}\`` }
           )
-          .setThumbnail(queue.current.thumbnail)
+          .setThumbnail(queue.currentTrack.thumbnail)
           .setFooter({
             text: `from the server ${inter.member.guild.name}`,
             iconURL: inter.member.guild.iconURL({ dynamic: false }),

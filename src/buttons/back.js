@@ -1,5 +1,5 @@
 module.exports = async ({ inter, queue }) => {
-  if (!queue || !queue.playing)
+  if (!queue || !queue.node.isPlaying())
     return inter.reply({
       content: `No music currently playing... try again ? ❌`,
       ephemeral: true,
@@ -11,7 +11,7 @@ module.exports = async ({ inter, queue }) => {
       ephemeral: true,
     });
 
-  await queue.back();
+  await queue.history.back();
 
   inter.reply({
     content: `Playing the **previous** track ✅`,

@@ -7,7 +7,7 @@ module.exports = async ({ inter, queue }) => {
       ephemeral: true,
     });
 
-  const vol = Math.floor(queue.volume - 5);
+  const vol = Math.floor(queue.options.volume - 5);
 
   if (vol < 0)
     return inter.reply({
@@ -15,7 +15,7 @@ module.exports = async ({ inter, queue }) => {
       ephemeral: true,
     });
 
-  if (queue.volume === vol)
+  if (queue.options.volume === vol)
     return inter.reply({
       content: `The volume you want to change is already the current one ${inter.member}... try again ? ❌`,
       ephemeral: true,

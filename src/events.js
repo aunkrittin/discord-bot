@@ -1,34 +1,21 @@
-const {
-  ApplicationCommandOptionType,
-  ActionRowBuilder,
-  ButtonBuilder,
-  EmbedBuilder,
-} = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require("discord.js");
 const fs = require("fs");
 
-player.on("error", (queue, error) => {
+player.events.on("error", (queue, error) => {
   console.log(`Error emitted from the queue ${error.message}`);
-  const errorMessage = `Error emitted from the queue ${error.message}\n`;
-  fs.appendFile("error.log", errorMessage, (err) => {
-    if (err) throw err;
-    console.log("Error logged to file");
-  });
 });
 
-player.on("connectionError", (queue, error) => {
+player.events.on("playerError", (queue, error) => {
   console.log(`Error emitted from the connection ${error.message}`);
 });
 
-player.on("stopped", (queue, track, payload) => {
-  console.log(`do stopped event`);
-});
-
-player.on("trackStart", async (queue, track) => {
+player.events.on("playerStart", async (queue, track) => {
   console.log(`do trackStart event`);
   const channel = await client.channels.fetch("1090136184837128202");
-  const message = await channel.messages.fetch("1090179733792235570");
-  // const messageId = "1090179733792235570";
-  const songs = queue.tracks.length;
+  const message = await channel.messages.fetch("1090453725484683284");
+  // const messageId = "1090453725484683284";
+
+  const songs = queue.tracks.size;
   const nextSongs =
     songs > 5
       ? `And **${songs - 5}** other song(s)...`
@@ -38,7 +25,7 @@ player.on("trackStart", async (queue, track) => {
 
   // console.log(message.embeds[0]);
   const embed = new EmbedBuilder()
-    .setTitle("icutmyhair#2000 ❤️")
+    .setTitle(`${track.title}`)
     .setDescription(nextSongs)
     .setFields([
       { name: "Author", value: track.author, inline: true },
@@ -112,20 +99,21 @@ player.on("trackStart", async (queue, track) => {
   );
 
   message.edit({ embeds: [embed], components: [row1, row2] });
+  // queue.metadata.channel.send({ embeds: [embed], components: [row1, row2] });
 });
 
-player.on("trackAdd", async (queue, track) => {
-  queue.metadata
+player.events.on("audioTrackAdd", async (queue, track) => {
+  queue.metadata.channel
     .send(`Track ${track.title} added in the queue ✅`)
     .then((msg) => {
       setTimeout(() => msg.delete(), 3000);
     });
 
   const channel = await client.channels.fetch("1090136184837128202");
-  const message = await channel.messages.fetch("1090179733792235570");
-  const messageId = "1090179733792235570";
+  const message = await channel.messages.fetch("1090453725484683284");
+  const messageId = "1090453725484683284";
 
-  const songs = queue.tracks.length;
+  const songs = queue.tracks.size;
   const nextSongs =
     songs > 5
       ? `And **${songs - 5}** other song(s)...`
@@ -138,13 +126,9 @@ player.on("trackAdd", async (queue, track) => {
       })`
   );
 
-  // const embed = new EmbedBuilder()
-  //   .setTitle("icutmyhair#2000 ❤️")
-  //   .setDescription(
-  //     `Current ${queue.current.title}\n\n${tracks
-  //       .slice(0, 5)
-  //       .join("\n")}\n\n${nextSongs}`
-  //   )
+  // const newEmbed = new EmbedBuilder()
+  //   .setTitle(`${track.title}`)
+  //   .setDescription(nextSongs)
   //   .setFields([
   //     { name: "Author", value: track.author, inline: true },
   //     { name: "Duration", value: track.duration, inline: true },
@@ -157,30 +141,25 @@ player.on("trackAdd", async (queue, track) => {
   //     text: `Requested by ${track.requestedBy.username}`,
   //   });
 
-  // if (messageId === message.id) {
-  //   console.log("exist message");
-  //   message.edit({ embeds: [embed] });
-  // } else {
-  //   console.log("not exist message");
-  // }
+  // message.edit({ embeds: [newEmbed] });
 });
 
-player.on("botDisconnect", async (queue, track) => {
-  queue.metadata
+player.events.on("disconnect", async (queue, track) => {
+  console.log("disconnect");
+  queue.metadata.channel
     .send(
       "I was manually disconnected from the voice channel, clearing queue... ❌"
     )
     .then((msg) => {
       setTimeout(() => msg.delete(), 3000);
     });
-  console.log("botDisconnect");
 
   const channel = await client.channels.fetch("1090136184837128202");
-  const message = await channel.messages.fetch("1090179733792235570");
-  const messageId = "1090179733792235570";
+  const message = await channel.messages.fetch("1090453725484683284");
+  const messageId = "1090453725484683284";
 
   const newEmbed = new EmbedBuilder()
-    .setTitle("พิมพ์ลงชื่อเพื่อเล่นเพลง")
+    .setTitle("พิมพ์ลงช่องเพื่อเล่นเพลง")
     .setImage(channel.guild.iconURL())
     .setColor("#13f857")
     .setFooter({
@@ -190,22 +169,24 @@ player.on("botDisconnect", async (queue, track) => {
   message.edit({ embeds: [newEmbed] });
 });
 
-player.on("channelEmpty", (queue) => {
-  queue.metadata
+player.events.on("emptyChannel", (queue) => {
+  queue.metadata.channel
     .send("Nobody is in the voice channel, leaving the voice channel... ❌")
     .then((msg) => {
       setTimeout(() => msg.delete(), 3000);
     });
 });
 
-player.on("queueEnd", (queue) => {
-  queue.metadata.send("I finished reading the whole queue ✅").then((msg) => {
-    setTimeout(() => msg.delete(), 3000);
-  });
+player.events.on("emptyQueue", (queue) => {
+  queue.metadata.channel
+    .send("I finished reading the whole queue ✅")
+    .then((msg) => {
+      setTimeout(() => msg.delete(), 3000);
+    });
 });
 
-player.on("tracksAdd", (queue, tracks) => {
-  queue.metadata
+player.events.on("audioTracksAdd", (queue, tracks) => {
+  queue.metadata.channel
     .send(`All the songs in playlist added into the queue ✅`)
     .then((msg) => {
       setTimeout(() => msg.delete(), 3000);

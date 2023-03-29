@@ -1,21 +1,21 @@
 const { EmbedBuilder } = require("discord.js");
 module.exports = async ({ client, inter, queue }) => {
-  if (!queue || !queue.playing)
+  if (!queue || !queue.node.isPlaying())
     return inter.reply({
       content: `No music currently playing... try again ? ❌`,
       ephemeral: true,
     });
 
-  const track = queue.current;
+  const track = queue.currentTrack;
 
   const methods = ["disabled", "track", "queue"];
 
-  const timestamp = queue.getPlayerTimestamp();
+  // const timestamp = queue.getPlayerTimestamp();
 
-  const trackDuration =
-    timestamp.progress == "Infinity" ? "infinity (live)" : track.duration;
+  // const trackDuration =
+  // timestamp.progress == "Infinity" ? "infinity (live)" : track.duration;
 
-  const progress = queue.createProgressBar();
+  // const progress = queue.node.createProgressBar();
 
   const embed = new EmbedBuilder()
     .setAuthor({
@@ -24,9 +24,7 @@ module.exports = async ({ client, inter, queue }) => {
     })
     .setThumbnail(track.thumbnail)
     .setDescription(
-      `Volume **${
-        queue.volume
-      }**%\nDuration **${trackDuration}**\nProgress ${progress}\nLoop mode **${
+      `Volume **${queue.options.volume}**%\nLoop mode **${
         methods[queue.repeatMode]
       }**\nRequested by ${track.requestedBy}`
     )

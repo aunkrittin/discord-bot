@@ -60,7 +60,7 @@ module.exports = (client, inter) => {
     console.log(inter.customId);
     const customId = JSON.parse(inter.customId);
     const file_of_button = customId.ffb;
-    const queue = player.getQueue(inter.guildId);
+    const queue = player.nodes.get(inter.guildId);
     if (file_of_button) {
       delete require.cache[
         require.resolve(`../src/buttons/${file_of_button}.js`)

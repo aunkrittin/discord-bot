@@ -12,8 +12,8 @@ module.exports = async ({ inter, queue }) => {
   return inter.reply({
     content: `${
       success
-        ? `Current music ${queue.current.title} paused ✅`
-        : `Current music ${queue.current.title} resumed ✅`
+        ? `Current music ${queue.currentTrack.title} paused ✅`
+        : `Current music ${queue.currentTrack.title} resumed ✅`
     }`,
     ephemeral: true,
   });

@@ -9,7 +9,7 @@ module.exports = async ({ inter, queue }) => {
 
   return inter.reply({
     content: success
-      ? `Current music ${queue.current.title} skipped ✅`
+      ? `Current music ${queue.currentTrack.title} skipped ✅`
       : `Something went wrong ${inter.member}... try again ? ❌`,
     ephemeral: true,
   });
