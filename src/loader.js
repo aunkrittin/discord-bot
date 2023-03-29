@@ -30,7 +30,8 @@ readdirSync("./commands/").forEach((dirs) => {
 });
 
 client.on("ready", (client) => {
-  if (client.config.app.global) client.application.commands.set(CommandsArray);
+  if (client.config.parsed?.GLOBAL)
+    client.application.commands.set(CommandsArray);
   // else
   //   client.guilds.cache
   //     .get(client.config.app.guild)
