@@ -61,5 +61,5 @@ module.exports = async (client, message) => {
     queue.addTrack(res.tracks[0]);
   }
 
-  if (!queue.node.isPlaying()) await queue.node.play();
+  if (queue.node.isPlaying() === false) await queue.node.play();
 };
