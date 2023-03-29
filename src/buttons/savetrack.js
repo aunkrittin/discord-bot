@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = async ({ inter, queue }) => {
-  if (!queue || !queue.playing)
+  if (!queue || !queue.node.isPlaying())
     return inter.reply({
       content: `No music currently playing... try again ? ❌`,
       ephemeral: true,
