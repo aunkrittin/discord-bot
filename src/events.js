@@ -178,6 +178,7 @@ player.events.on("emptyChannel", (queue) => {
 });
 
 player.events.on("emptyQueue", (queue) => {
+  console.log("emptyQueue");
   queue.metadata.channel
     .send("I finished reading the whole queue ✅")
     .then((msg) => {
