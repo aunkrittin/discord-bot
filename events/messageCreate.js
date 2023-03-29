@@ -2,11 +2,10 @@ const { QueryType } = require("discord-player");
 
 module.exports = async (client, message) => {
   if (message.author.bot || message.channel.name !== "music-commands") return;
-  const song = message.content;
 
-  const res = await player.search(song, {
+  const res = await player.search(message.content, {
     requestedBy: message.member,
-    searchEngine: QueryType.AUTO,
+    searchEngine: QueryType.YOUTUBE,
   });
 
   if (!res || !res.tracks.length)

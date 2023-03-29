@@ -14,7 +14,6 @@ module.exports = {
     leaveOnStopCooldown: 300000,
     selfDeaf: true,
     loopMessage: false,
-    spotifyBridge: true,
     volume: 75,
     discordPlayer: {
       ytdlOptions: {
