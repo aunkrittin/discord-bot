@@ -6,7 +6,7 @@ module.exports = async (client, message) => {
 
   const res = await player.search(song, {
     requestedBy: message.member,
-    searchEngine: QueryType.AUTO,
+    searchEngine: QueryType.YOUTUBE,
   });
 
   if (!res || !res.tracks.length)
