@@ -20,7 +20,7 @@ player.events.on("playerStart", async (queue, track) => {
       ? `And **${songs - 5}** other song(s)...`
       : `In the playlist **${songs}** song(s)...`;
 
-  if (!client.config.opt.loopMessage && queue.repeatMode !== 0) return;
+  if (!client.config.parsed?.LOOP_MESSAGE && queue.repeatMode !== 0) return;
 
   // console.log(message.embeds[0]);
   const embed = new EmbedBuilder()
