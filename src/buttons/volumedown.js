@@ -1,4 +1,4 @@
-const maxVol = client.config.opt.maxVol;
+const maxVol = client.config.parsed?.MAX_VOL;
 
 module.exports = async ({ inter, queue }) => {
   if (!queue || !queue.node.isPlaying())
