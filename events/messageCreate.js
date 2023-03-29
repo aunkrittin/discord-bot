@@ -25,11 +25,9 @@ module.exports = async (client, message) => {
       client: message.guild.members.me,
       requestedBy: message.user,
     },
-    // spotifyBridge: client.config.opt.spotifyBridge,
+    spotifyBridge: client.config.opt.spotifyBridge,
     volume: client.config.opt.volume,
     leaveOnEnd: client.config.opt.leaveOnEnd,
-    leaveOnStop: true,
-    leaveOnEmpty: true,
   });
 
   try {
