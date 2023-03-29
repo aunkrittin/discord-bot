@@ -7,17 +7,19 @@ global.client = new Client({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildVoiceStates,
-    "GuildVoiceStates",
     GatewayIntentBits.MessageContent,
   ],
   disableMentions: "everyone",
 });
 
-client.config = require("./config");
+// require("dotenv").config();
+client.config = require("dotenv").config();
 
-global.player = new Player(client, client.config.opt.discordPlayer);
+// global.player = new Player(client, client.config.opt.discordPlayer);
+global.player = new Player(client, {
+  ytdlOptions: client.config.parsed?.YOUTUBE_DL_OPTIONS,
+});
 
 require("./src/loader");
 require("./src/events");
-
-client.login(client.config.app.token);
+client.login(client.config.parsed?.TOKEN);
