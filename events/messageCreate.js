@@ -28,8 +28,8 @@ module.exports = async (client, message) => {
     volume: client.config.opt.volume,
     leaveOnEnd: client.config.opt.leaveOnEnd,
     leaveOnEndCooldown: client.config.opt.leaveOnEndCooldown,
-    leaveOnEmpty: client.config.opt.leaveOnEmpty,
-    leaveOnEmptyCooldown: client.config.opt.leaveOnEmptyCooldown,
+    leaveOnStop: client.config.opt.leaveOnStop,
+    leaveOnStopCooldown: client.config.opt.leaveOnStopCooldown,
     selfDeaf: client.config.opt.selfDeaf,
   });
 
