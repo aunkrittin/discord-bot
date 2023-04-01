@@ -1,7 +1,7 @@
 const { QueryType } = require("discord-player");
 
 module.exports = async (client, message) => {
-  if (message.author.bot || message.channel.name !== "music-commands") return;
+  if (message.author.bot) return;
 
   const res = await player.search(message.content, {
     requestedBy: message.member,

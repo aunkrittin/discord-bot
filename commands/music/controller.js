@@ -27,24 +27,13 @@ module.exports = {
         ephemeral: true,
       });
 
-    const embed = new EmbedBuilder()
-      .setTitle("control your music from the buttons below")
-      .setImage(inter.guild.iconURL({ size: 4096, dynamic: true }))
-      .setColor("#36393e")
+    const newEmbed = new EmbedBuilder()
+      .setTitle("พิมพ์ลงช่องเพื่อเล่นเพลง")
+      .setImage(Channel.guild.iconURL())
+      .setColor("#13f857")
       .setFooter({
-        text: "icutmyhair ❤️",
-        iconURL: inter.member.avatarURL({ dynamic: true }),
+        text: `Made by @icutmyhair#2000`,
       });
-
-    inter.reply({
-      content: `sending controller to ${Channel}... ✅`,
-      ephemeral: true,
-    });
-
-    const back = new ButtonBuilder()
-      .setLabel("Back")
-      .setCustomId(JSON.stringify({ ffb: "back" }))
-      .setStyle("Primary");
 
     const skip = new ButtonBuilder()
       .setLabel("Skip")
@@ -55,11 +44,6 @@ module.exports = {
       .setLabel("Resume & Pause")
       .setCustomId(JSON.stringify({ ffb: "resume&pause" }))
       .setStyle("Danger");
-
-    const save = new ButtonBuilder()
-      .setLabel("Save")
-      .setCustomId(JSON.stringify({ ffb: "savetrack" }))
-      .setStyle("Success");
 
     const volumeup = new ButtonBuilder()
       .setLabel("Volume up")
@@ -87,7 +71,6 @@ module.exports = {
       .setStyle("Secondary");
 
     const row1 = new ActionRowBuilder().addComponents(
-      back,
       queuebutton,
       resumepause,
       np,
@@ -96,10 +79,9 @@ module.exports = {
     const row2 = new ActionRowBuilder().addComponents(
       volumedown,
       loop,
-      save,
       volumeup
     );
 
-    Channel.send({ embeds: [embed], components: [row1, row2] });
+    Channel.send({ embeds: [newEmbed], components: [row1, row2] });
   },
 };
